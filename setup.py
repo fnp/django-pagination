@@ -32,19 +32,19 @@
 import os
 from setuptools import setup, find_packages
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'linaro_django_pagination.tests.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'fnp_django_pagination.tests.settings'
 
 setup(
-    name='linaro-django-pagination',
+    name='fnp-django-pagination',
     # Magic version handling with versiontools
-    version=":versiontools:linaro_django_pagination:__version__",
+    version=":versiontools:fnp_django_pagination:__version__",
     author='Zygmunt Krynicki',
     author_email='zygmunt.krynicki@linaro.org',
-    description="linaro-django-pagination",
+    description="fnp-django-pagination",
     long_description=open("README.rst").read(),
     keywords='pagination,django',
-    url='https://github.com/zyga/django-pagination',
-    test_suite="linaro_django_pagination.tests.runner.runtests",
+    url='https://github.com/fnp/django-pagination',
+    test_suite="fnp_django_pagination.tests.runner.runtests",
     license='BSD',
     packages=find_packages(),
     classifiers=[

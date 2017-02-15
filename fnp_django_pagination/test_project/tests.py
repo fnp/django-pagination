@@ -1,4 +1,3 @@
-# Copyright (c) 2008, Eric Florenzano
 # Copyright (c) 2010, 2011 Linaro Limited
 # All rights reserved.
 #
@@ -28,10 +27,11 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-"""
-linaro-django-pagination is a set of utilities for creating robust pagination
-tools throughout a django application.
-"""
+
+def run_tests():
+    from django_testproject.tests import run_tests_for
+    run_tests_for("fnp_django_pagination.test_project.settings")
 
 
-__version__ = (2, 0, 2, "final", 0)
+if __name__ == '__main__':
+    run_tests()

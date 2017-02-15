@@ -34,7 +34,7 @@ import logging
 from django.core.management import execute_manager
 
 try:
-    from linaro_django_pagination.test_project import settings
+    from fnp_django_pagination.test_project import settings
 except ImportError as ex:
     logging.exception("Unable to import application settings")
     raise SystemExit(ex)

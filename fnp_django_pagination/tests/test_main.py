@@ -37,9 +37,9 @@ try:
 except ImportError:  # Django 1.2 compatible
     from django.test import TestCase as SimpleTestCase
 
-from linaro_django_pagination.paginator import InfinitePaginator, FinitePaginator
-from linaro_django_pagination.templatetags.pagination_tags import paginate
-from linaro_django_pagination.middleware import PaginationMiddleware
+from fnp_django_pagination.paginator import InfinitePaginator, FinitePaginator
+from fnp_django_pagination.templatetags.pagination_tags import paginate
+from fnp_django_pagination.middleware import PaginationMiddleware
 
 
 class HttpRequest(DjangoHttpRequest):
@@ -301,7 +301,7 @@ class InfinitePaginatorTestCase(SimpleTestCase):
     def test_paginator_repr(self):
         self.assertEqual(
             repr(InfinitePaginator),
-            "<class 'linaro_django_pagination.paginator.InfinitePaginator'>",
+            "<class 'fnp_django_pagination.paginator.InfinitePaginator'>",
         )
 
     def test_validate_number(self):
@@ -342,7 +342,7 @@ class FinitePaginatorTestCase(SimpleTestCase):
     def test_repr(self):
         self.assertEqual(
             repr(FinitePaginator),
-            "<class 'linaro_django_pagination.paginator.FinitePaginator'>"
+            "<class 'fnp_django_pagination.paginator.FinitePaginator'>"
         )
 
     def test_validate_number(self):

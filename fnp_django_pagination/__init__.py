@@ -1,3 +1,4 @@
+# Copyright (c) 2008, Eric Florenzano
 # Copyright (c) 2010, 2011 Linaro Limited
 # All rights reserved.
 #
@@ -27,28 +28,10 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import sys
-import os
-
-# Add this directory to path so that 'example' can be imported later
-# below. Without this the runner will fail when started via ``setup.py
-# test``
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
-
-from django_testproject.settings import gen_settings
+"""
+fnp-django-pagination is a set of utilities for creating robust pagination
+tools throughout a django application.
+"""
 
 
-locals().update(
-    gen_settings(
-        INSTALLED_APPS=[
-            'example',
-            'linaro_django_pagination'],
-        MIDDLEWARE_CLASSES=[
-            'linaro_django_pagination.middleware.PaginationMiddleware'],
-        TEMPLATE_CONTEXT_PROCESSORS=[
-            # Request processor needs to be enabled
-            'django.core.context_processors.request'],
-        ROOT_URLCONF="linaro_django_pagination.test_project.urls"),
-        TEMPLATE_LOADERS = ['django.template.loaders.app_directories.Loader'],
-        SECRET_KEY = 'not for production',
-    )
+__version__ = (2, 2, 0, "final", 0)

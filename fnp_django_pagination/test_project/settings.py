@@ -27,11 +27,28 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+import sys
+import os
 
-def run_tests():
-    from django_testproject.tests import run_tests_for
-    run_tests_for("linaro_django_pagination.test_project.settings")
+# Add this directory to path so that 'example' can be imported later
+# below. Without this the runner will fail when started via ``setup.py
+# test``
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+
+from django_testproject.settings import gen_settings
 
 
-if __name__ == '__main__':
-    run_tests()
+locals().update(
+    gen_settings(
+        INSTALLED_APPS=[
+            'example',
+            'fnp_django_pagination'],
+        MIDDLEWARE_CLASSES=[
+            'fnp_django_pagination.middleware.PaginationMiddleware'],
+        TEMPLATE_CONTEXT_PROCESSORS=[
+            # Request processor needs to be enabled
+            'django.core.context_processors.request'],
+        ROOT_URLCONF="fnp_django_pagination.test_project.urls"),
+        TEMPLATE_LOADERS = ['django.template.loaders.app_directories.Loader'],
+        SECRET_KEY = 'not for production',
+    )
