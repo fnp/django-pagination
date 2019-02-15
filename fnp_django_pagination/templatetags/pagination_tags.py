@@ -195,8 +195,7 @@ class PaginateNode(Node):
         new_context = paginate(context)
         if self.template:
             template_list.insert(0, self.template)
-        with context.push(new_context):
-            return loader.render_to_string(template_list, context)
+        return loader.render_to_string(template_list, new_context)
 
 
 def do_paginate(parser, token):

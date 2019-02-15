@@ -34,4 +34,4 @@ tools throughout a django application.
 """
 
 
-__version__ = (2, 2, 1, "final", 0)
+__version__ = (2, 2, 2, "final", 0)
