@@ -48,7 +48,11 @@ class InfinitePaginator(Paginator):
         super(InfinitePaginator, self).__init__(object_list, per_page, orphans,
             allow_empty_first_page)
         # no count or num pages
-        del self._num_pages, self._count
+        try:
+            del self._num_pages, self._count
+        except AttributeError:
+            # These are just cached properties anyway.
+            pass
         # bonus links
         self.link_template = link_template
 
