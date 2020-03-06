@@ -35,7 +35,7 @@ except ImportError:
     MiddlewareMixin = object
 
 
-def get_page(self, suffix):
+def get_page(self, suffix=''):
     """
     A function which will be monkeypatched onto the request to get the current
     integer representing the current page.
