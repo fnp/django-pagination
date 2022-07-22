@@ -9,11 +9,7 @@ from django.core.management import call_command
 
 def runtests():
     os.environ['DJANGO_SETTINGS_MODULE'] = 'fnp_django_pagination.tests.settings'
-
-    try:
-        django.setup()
-    except AttributeError:  # for Django 1.6 compatible
-        pass
+    django.setup()
 
     failures = call_command('test', 'fnp_django_pagination')
     sys.exit(bool(failures))

@@ -28,11 +28,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-try:
-    from django.utils.deprecation import MiddlewareMixin
-except ImportError:
-    # Django < 1.10
-    MiddlewareMixin = object
+from django.utils.deprecation import MiddlewareMixin
 
 
 def get_page(self, suffix=''):
@@ -41,7 +37,6 @@ def get_page(self, suffix=''):
     integer representing the current page.
     """
     try:
-        # REQUEST is deprecated as of Django 1.7.
         key = 'page%s' % suffix
         value = self.POST.get(key)
         if value is None:

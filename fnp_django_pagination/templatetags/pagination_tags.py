@@ -42,15 +42,8 @@ from django.template import (
     loader,
 )
 
-try:
-    from django.template.base import TokenType
-    TOKEN_BLOCK = TokenType.BLOCK
-except ImportError:
-    try:
-        # Django 1.8-1.11
-        from django.template.base import TOKEN_BLOCK
-    except ImportError:     # Django < 1.8
-        from django.template import TOKEN_BLOCK
+from django.template.base import TokenType
+TOKEN_BLOCK = TokenType.BLOCK
 
 from django.template.loader import select_template
 from django.utils.text import unescape_string_literal
