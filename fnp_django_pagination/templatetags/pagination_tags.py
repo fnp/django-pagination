@@ -142,7 +142,9 @@ class AutoPaginateNode(Node):
         if self.multiple_paginations and 'multiple_paginations' not in context:
             context['multiple_paginations'] = True
 
-        if context.get('multiple_paginations') or getattr(context, "paginator", None):
+        if context.get('page_suffix'):
+            page_suffix = context['page_suffix']
+        elif context.get('multiple_paginations') or getattr(context, "paginator", None):
             page_suffix = '_%s' % self.queryset_var
         else:
             page_suffix = ''
