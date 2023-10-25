@@ -187,12 +187,14 @@ class AutoPaginateNode(Node):
 
 class PaginateNode(Node):
 
-    def __init__(self, template=None):
+    def __init__(self, template=None, window=None, margin=None):
         self.template = template
+        self.window = window
+        self.margin = margin
 
     def render(self, context):
         template_list = ['pagination/pagination.html']
-        new_context = paginate(context)
+        new_context = paginate(context, window=self.window, margin=self.margin)
         if self.template:
             template_list.insert(0, self.template)
         return loader.render_to_string(template_list, new_context)
@@ -204,22 +206,32 @@ def do_paginate(parser, token):
 
     Syntax is:
 
-        paginate [using "TEMPLATE"]
+        paginate [using "TEMPLATE"] [window N] [margin N]
 
     Where TEMPLATE is a quoted template name. If missing the default template
     is used (paginate/pagination.html).
     """
     argv = token.split_contents()
     argc = len(argv)
-    if argc == 1:
-        template = None
-    elif argc == 3 and argv[1] == 'using':
-        template = unescape_string_literal(argv[2])
-    else:
-        raise TemplateSyntaxError(
-            "Invalid syntax. Proper usage of this tag is: "
-            "{% paginate [using \"TEMPLATE\"] %}")
-    return PaginateNode(template)
+    template = None
+    window=DEFAULT_WINDOW
+    margin=DEFAULT_MARGIN
+    i = 1
+    while i < argc:
+        if argv[i] == 'using':
+            template = unescape_string_literal(argv[i + 1])
+            i += 2
+        elif argv[i] == 'window':
+            window = argv[i + 1]
+            i += 2
+        elif argv[i] == 'margin':
+            margin = argv[i + 1]
+            i += 2
+        else:
+            raise TemplateSyntaxError(
+                "Invalid syntax. Proper usage of this tag is: "
+                "{% paginate [using \"TEMPLATE\"] %}")
+    return PaginateNode(template, window, margin)
 
 
 def paginate(context, window=DEFAULT_WINDOW, margin=DEFAULT_MARGIN):
@@ -265,6 +277,14 @@ def paginate(context, window=DEFAULT_WINDOW, margin=DEFAULT_MARGIN):
     try:
         paginator = context['paginator']
         page_obj = context['page_obj']
+        try:
+            window = int(window)
+        except ValueError:
+            window = Variable(window).resolve(context)
+        try:
+            margin = int(margin)
+        except ValueError:
+            margin = Variable(margin).resolve(context)
         page_suffix = context.get('page_suffix', '')
         page_range = list(paginator.page_range)
         # Calculate the record range in the current page for display.
