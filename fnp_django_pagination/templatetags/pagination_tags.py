@@ -187,14 +187,15 @@ class AutoPaginateNode(Node):
 
 class PaginateNode(Node):
 
-    def __init__(self, template=None, window=None, margin=None):
+    def __init__(self, template=None, window=None, margin=None, ignored_vars=None):
         self.template = template
         self.window = window
         self.margin = margin
+        self.ignored_vars = ignored_vars
 
     def render(self, context):
         template_list = ['pagination/pagination.html']
-        new_context = paginate(context, window=self.window, margin=self.margin)
+        new_context = paginate(context, window=self.window, margin=self.margin, ignored_vars=ignored_vars)
         if self.template:
             template_list.insert(0, self.template)
         return loader.render_to_string(template_list, new_context)
