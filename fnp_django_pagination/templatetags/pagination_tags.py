@@ -270,6 +270,15 @@ def paginate(context, window=DEFAULT_WINDOW, margin=DEFAULT_MARGIN):
         window=2, margin=0, current=11     ... 7 8 9 10 [11]
         """
 
+    try:
+        window = int(window)
+    except ValueError:
+        window = Variable(window).resolve(context)
+    try:
+        margin = int(margin)
+    except ValueError:
+        margin = Variable(margin).resolve(context)
+
     if window < 0:
         raise ValueError('Parameter "window" cannot be less than zero')
     if margin < 0:
@@ -277,14 +286,6 @@ def paginate(context, window=DEFAULT_WINDOW, margin=DEFAULT_MARGIN):
     try:
         paginator = context['paginator']
         page_obj = context['page_obj']
-        try:
-            window = int(window)
-        except ValueError:
-            window = Variable(window).resolve(context)
-        try:
-            margin = int(margin)
-        except ValueError:
-            margin = Variable(margin).resolve(context)
         page_suffix = context.get('page_suffix', '')
         page_range = list(paginator.page_range)
         # Calculate the record range in the current page for display.
