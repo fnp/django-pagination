@@ -195,7 +195,7 @@ class PaginateNode(Node):
 
     def render(self, context):
         template_list = ['pagination/pagination.html']
-        new_context = paginate(context, window=self.window, margin=self.margin, ignored_vars=ignored_vars)
+        new_context = paginate(context, window=self.window, margin=self.margin, ignored_vars=self.ignored_vars)
         if self.template:
             template_list.insert(0, self.template)
         return loader.render_to_string(template_list, new_context)
