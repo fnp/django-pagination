@@ -214,8 +214,9 @@ def do_paginate(parser, token):
     argv = token.split_contents()
     argc = len(argv)
     template = None
-    window=DEFAULT_WINDOW
-    margin=DEFAULT_MARGIN
+    window = DEFAULT_WINDOW
+    margin = DEFAULT_MARGIN
+    ignored_vars = []
     i = 1
     while i < argc:
         if argv[i] == 'using':
@@ -227,14 +228,17 @@ def do_paginate(parser, token):
         elif argv[i] == 'margin':
             margin = argv[i + 1]
             i += 2
+        elif argv[i] == 'ignore':
+            ignored_vars.append(argv[i + 1])
+            i += 2
         else:
             raise TemplateSyntaxError(
                 "Invalid syntax. Proper usage of this tag is: "
                 "{% paginate [using \"TEMPLATE\"] %}")
-    return PaginateNode(template, window, margin)
+    return PaginateNode(template, window, margin, ignored_vars)
 
 
-def paginate(context, window=DEFAULT_WINDOW, margin=DEFAULT_MARGIN):
+def paginate(context, window=DEFAULT_WINDOW, margin=DEFAULT_MARGIN, ignored_vars=None):
     """
     Renders the ``pagination/pagination.html`` template, resulting in a
     Digg-like display of the available pages, given the current page.  If there
@@ -349,6 +353,10 @@ def paginate(context, window=DEFAULT_WINDOW, margin=DEFAULT_MARGIN):
         }
         if 'request' in context:
             getvars = context['request'].GET.copy()
+            if ignored_vars:
+                for v in ignored_vars:
+                    if v in getvars:
+                        del getvars[v]
             if 'page%s' % page_suffix in getvars:
                 del getvars['page%s' % page_suffix]
             if len(getvars.keys()) > 0:
