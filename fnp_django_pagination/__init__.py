@@ -32,6 +32,3 @@
 fnp-django-pagination is a set of utilities for creating robust pagination
 tools throughout a django application.
 """
-
-
-__version__ = (2, 2, 12, "final", 0)

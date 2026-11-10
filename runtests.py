@@ -8,7 +8,7 @@ from django.core.management import call_command
 
 
 def runtests():
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'fnp_django_pagination.tests.settings'
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'test_project.settings'
     django.setup()
 
     failures = call_command('test', 'fnp_django_pagination')
